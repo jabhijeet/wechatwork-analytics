@@ -4,6 +4,7 @@ import com.example.wechatwork.config.WechatWorkConfig;
 import com.example.wechatwork.gateway.WechatWorkGateway;
 import com.example.wechatwork.model.GetTokenResponse;
 import lombok.val;
+import lombok.var;
 import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.crypto.WxCryptUtil;
 import org.slf4j.Logger;
@@ -11,14 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
-@Controller
+@RestController
 public class CorporateCustomerEventController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CorporateCustomerEventController.class);
 
@@ -34,22 +33,22 @@ public class CorporateCustomerEventController {
 
     @GetMapping("/corporate-customer-event")
     public ResponseEntity<?> echo(@RequestParam("msg_signature") String msg_signature,
-                       @RequestParam("timestamp") String timestamp,
-                       @RequestParam("nonce") String nonce,
-                       @RequestParam("echostr") String echostr) {
+                                  @RequestParam("timestamp") String timestamp,
+                                  @RequestParam("nonce") String nonce,
+                                  @RequestParam("echostr") String echostr) {
         WxCryptUtil wxCryptUtil = new WxCryptUtil(wechatWorkConfig.getExternalContactToken(),
                 wechatWorkConfig.getExternalContactAesKey(),
                 wechatWorkConfig.getCorpid());
 
         String decrypt = wxCryptUtil.decrypt(echostr);
-
+        System.out.println("test");
         return new ResponseEntity<>(decrypt, HttpStatus.OK);
     }
 
     @PostMapping(path = "/corporate-customer-event")
     public ResponseEntity<?> callback(@RequestParam("msg_signature") String message,
                                       @RequestParam("nonce") String nonce,
-                                      @RequestBody String eventString){
+                                      @RequestBody String eventString) {
 
         WxCryptUtil wxCryptUtil = new WxCryptUtil(wechatWorkConfig.getExternalContactToken(),
                 wechatWorkConfig.getExternalContactAesKey(),
@@ -81,7 +80,7 @@ public class CorporateCustomerEventController {
     }
 
     private void writeStringToFile(String eventString) {
-        try (var fr = new FileWriter("eventString" + System.currentTimeMillis(), StandardCharsets.UTF_8)) {
+        try (var fr = new FileWriter("eventString" + System.currentTimeMillis())) {
             fr.write(eventString);
         } catch (IOException e) {
             e.printStackTrace();

@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>wechatwork-sample</artifactId>
+	<artifactId>wechatwork-analytics</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>wechatwork-sample</name>
-	<description>Demo project for using WeChat Work API</description>
+	<name>wechatwork-analytics</name>
+	<description>Analytics project for using WeChat Work API</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -78,6 +78,16 @@
 			<groupId>org.springframework.restdocs</groupId>
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
 		</dependency>
 	</dependencies>
 
