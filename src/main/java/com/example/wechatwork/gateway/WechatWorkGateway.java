@@ -1,10 +1,12 @@
 package com.example.wechatwork.gateway;
 
 import com.example.wechatwork.config.WechatWorkConfig;
+import com.example.wechatwork.model.GetCustomerByUserIdResponse;
+import com.example.wechatwork.model.GetDepartmentResponse;
 import com.example.wechatwork.model.GetTokenResponse;
 import lombok.val;
-import me.chanjar.weixin.common.api.WxConsts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -17,16 +19,9 @@ public class WechatWorkGateway {
     @Autowired
     private WechatWorkConfig config;
 
+    @Cacheable
     public GetTokenResponse getAccessToken() {
-        WebClient client = WebClient
-                .builder()
-                .baseUrl("https://qyapi.weixin.qq.com/")
-                .defaultCookie("cookieKey", "cookieValue")
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
-
-        WebClient.ResponseSpec response;
-        return client.get()
+        return getWebClient().get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/cgi-bin/gettoken")
                         .queryParam("corpid", config.getCorpid())
@@ -37,16 +32,34 @@ public class WechatWorkGateway {
                 .block();
     }
 
+    public GetDepartmentResponse getDepartments() {
+        return getWebClient().get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/cgi-bin/department/list")
+                        .queryParam("access_token", getAccessToken().getAccess_token())
+                        .build())
+                .retrieve()
+                .bodyToMono(GetDepartmentResponse.class)
+                .block();
+    }
+
+    public GetCustomerByUserIdResponse getCustomerListByUserId(final String userId) {
+        return getWebClient().get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/cgi-bin/externalcontact/list")
+                        .queryParam("access_token", getAccessToken().getAccess_token())
+                        .queryParam("userid", userId)
+                        .build())
+                .retrieve()
+                .bodyToMono(GetCustomerByUserIdResponse.class)
+                .block();
+    }
+
+
     public String getCallbackIp(String accessToken) {
-        WebClient client = WebClient
-                .builder()
-                .baseUrl("https://qyapi.weixin.qq.com/")
-                .defaultCookie("cookieKey", "cookieValue")
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
 
         WebClient.ResponseSpec response;
-        response = client.get()
+        response = getWebClient().get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/cgi-bin/getcallbackip")
                         .queryParam("access_token", accessToken)
@@ -57,13 +70,6 @@ public class WechatWorkGateway {
     }
 
     public String send(String accessToken, String touser, String agentid, String message) {
-        WebClient client = WebClient
-                .builder()
-                .baseUrl("https://qyapi.weixin.qq.com/")
-                .defaultCookie("cookieKey", "cookieValue")
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
-
         val body = new HashMap<String, Object>();
         body.put("ToUser", touser);
         body.put("MsgType", "text");
@@ -73,7 +79,7 @@ public class WechatWorkGateway {
         body.put("text", content);
 
         WebClient.ResponseSpec response;
-        response = client.post()
+        response = getWebClient().post()
                 .uri(uriBuilder -> uriBuilder
                         .path("/cgi-bin/message/send")
                         .queryParam("access_token", accessToken)
@@ -82,4 +88,14 @@ public class WechatWorkGateway {
 
         return response.bodyToMono(String.class).block();
     }
+
+    private WebClient getWebClient() {
+        return WebClient
+                .builder()
+                .baseUrl("https://qyapi.weixin.qq.com/")
+                .defaultCookie("cookieKey", "cookieValue")
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build();
+    }
+
 }
