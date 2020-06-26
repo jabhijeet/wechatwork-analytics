@@ -2,6 +2,7 @@ package com.example.wechatwork.service.impl;
 
 import com.example.wechatwork.gateway.WechatWorkGateway;
 import com.example.wechatwork.model.GetCustomerByUserIdResponse;
+import com.example.wechatwork.model.GetUnassignedUserResponse;
 import com.example.wechatwork.model.GetUsersWithCustomerContactPermResponse;
 import com.example.wechatwork.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,10 @@ public class CustomerServiceImpl implements CustomerService {
             }
         }
         return map;
+    }
+
+    @Override
+    public GetUnassignedUserResponse getUnassignedUsers() {
+        return wechatWorkGateway.getUnassignedUsers();
     }
 }

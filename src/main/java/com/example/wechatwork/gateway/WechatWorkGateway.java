@@ -56,13 +56,13 @@ public class WechatWorkGateway {
         body.put("start_time", 1592533086);
         body.put("end_time", 1593137886);*/
         //TODO TimeZone can be adjusted, add this logic in service
-      /*  final long endTime = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
-        final long startTime = LocalDateTime.now().minusDays(30).toEpochSecond(ZoneOffset.UTC);
+  /*      final long endTime = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+        final long startTime = LocalDateTime.now().minusMonths(1).toEpochSecond(ZoneOffset.UTC);
         LOGGER.info("endTime: {}, startTime: {}", endTime, startTime);*/
 
         GetUserBehaviourResquest getUserBehaviourResquest = new GetUserBehaviourResquest();
-        getUserBehaviourResquest.setEnd_time(1593137886);
-        getUserBehaviourResquest.setStart_time(1590977886);
+        getUserBehaviourResquest.setEnd_time(1593137886);// Jun 1
+        getUserBehaviourResquest.setStart_time(1590977886); // Jun 26
         getUserBehaviourResquest.setUserid(userid);
 
         WebClient.ResponseSpec response;
@@ -84,6 +84,18 @@ public class WechatWorkGateway {
                         .build())
                 .retrieve()
                 .bodyToMono(GetDepartmentResponse.class)
+                .block();
+    }
+
+
+    public GetUnassignedUserResponse getUnassignedUsers() {
+        return getWebClient().get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/cgi-bin/externalcontact/get_unassigned_list")
+                        .queryParam("access_token", getAccessToken().getAccess_token())
+                        .build())
+                .retrieve()
+                .bodyToMono(GetUnassignedUserResponse.class)
                 .block();
     }
 
