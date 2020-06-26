@@ -15,6 +15,7 @@ class GraphCard extends Component {
             api: props.api,
             chartType: props.chartType,
             dataPoints: props.dataPoints,
+            xValueFormatString: props.xValueFormatString,
             loading: true
         };
 
@@ -36,14 +37,19 @@ class GraphCard extends Component {
         let id = this.state.id;
         var dps = [];
         if (this.state.response) {
+            var index = 1;
             for (const [key, value] of Object.entries(this.state.response)) {
+                var xVal;
                 var yVal;
-                if (id === "EmployeeCustomers")
+                if (id === "EmployeeCustomers") {
+                    xVal = key;
                     yVal = value;
-                else {
+                } else {
+                    xVal = key;
                     yVal = this.state.response[key][id];
                 }
-                dps.push({label: key, y: yVal});
+                dps.push({x: index, label: xVal, y: yVal});
+                index = index + 1;
             }
         }
         console.log(dps);
@@ -56,6 +62,7 @@ class GraphCard extends Component {
             theme: "light2", // "light1", "dark1", "dark2"
             animationEnabled: true,
             zoomEnabled: true,
+
             title: {
                 fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
                 fontSize: 20,

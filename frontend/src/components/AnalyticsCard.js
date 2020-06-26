@@ -9,7 +9,6 @@ const colors = [
     '#FAD7A0',
     '#F5B7B1',
     '#C39BD3',
-    '#5F6A6A',
 ];
 
 
