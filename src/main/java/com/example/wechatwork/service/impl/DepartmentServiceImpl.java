@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import static java.util.Objects.nonNull;
 
@@ -46,7 +47,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Map<LocalDate, BehaviourData> getBehaviourDataForAllUser() {
-        Map<LocalDate, BehaviourData> behaviourDataMap = new HashMap<>();
+        Map<LocalDate, BehaviourData> behaviourDataMap = new TreeMap<>();
         GetUsersWithCustomerContactPermResponse response = wechatWorkGateway.getUsersWithCustomerContactPerm();
         if (response.getErrcode().equalsIgnoreCase("0") && nonNull(response.getFollow_user()) && response.getFollow_user().size() > 0) {
             GetUserBehaviourResponse getUserBehaviourResponse = wechatWorkGateway.getBehaviourDataForAllUser(response.getFollow_user());
