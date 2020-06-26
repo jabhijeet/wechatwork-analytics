@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class GetUnassignedUserResponse {
+public class GetUnassignedCustomerResponse {
     private String errcode;
     private String errmsg;
     private List<UnassignedUserDetails> info;

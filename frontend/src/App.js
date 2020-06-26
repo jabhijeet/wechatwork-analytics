@@ -25,56 +25,48 @@ class App extends Component {
                     <AnalyticsCard header={'Total Departments'} api={'/api/v1/wechatwork/analytics/getDepartments'}
                                    id={"TotalDepartments"}/>
                     <AnalyticsCard header={'Total Company Employees'}
-                                   api={'/api/v1/wechatwork/analytics/getUsersWithCustomerContactPerm'}
+                                   api={'/api/v1/wechatwork/analytics/getMembersList'}
                                    id={"TotalCompanyEmployees"}/>
                     <AnalyticsCard header={'Total Company Clients'}
                                    api={'api/v1/wechatwork/analytics/getActiveCustomerCount'}
                                    id={"TotalActiveClients"}/>
                     <AnalyticsCard header={'Unassigned Customers'}
-                                   api={'/api/v1/wechatwork/analytics/getUnassignedUserCount'}
+                                   api={'/api/v1/wechatwork/analytics/getUnassignedCustomerCount'}
                                    id={"UnassignedCustomers"}/>
                 </CardDeck>
                 <Row>
                     <Col>
                         <GraphCard title={'Daily Message Count'} chartType={'splineArea'} id={"message_cnt"}
-                                   xValueFormatString={"yyyy-MM-dd"}
-                                   api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
+                                   api={'/api/v1/wechatwork/analytics/getStatisticsData'}/>
                     </Col>
                     <Col>
                         <GraphCard title={'Daily Chat Count'} chartType={'splineArea'} id={"chat_cnt"}
-                                   xValueFormatString={"yyyy-MM-dd"}
-                                   api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
+                                   api={'/api/v1/wechatwork/analytics/getStatisticsData'}/>
                     </Col>
 
                     <Col>
                         <GraphCard title={'Daily Reply Percentage'} chartType={'column'} id={"reply_percentage"}
-                                   xValueFormatString={"yyyy-MM-dd"}
-                                   api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <GraphCard title={'Avg Reply Time'} chartType={'column'} id={"avg_reply_time"}
-                                   xValueFormatString={"yyyy-MM-dd"}
-                                   api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
+                                   api={'/api/v1/wechatwork/analytics/getStatisticsData'}/>
                     </Col>
 
                     <Col>
-                        <GraphCard title={'Daily Negative Feedback Count'} chartType={'column'}
-                                   id={"negative_feedback_cnt"} xValueFormatString={"yyyy-MM-dd"}
-                                   api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
-                    </Col>
-                    <Col>
-                        <GraphCard title={'Daily New Apply Count'} chartType={'splineArea'} id={"new_apply_cnt"}
-                                   xValueFormatString={"yyyy-MM-dd"}
-                                   api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
+                        <GraphCard title={'Avg Reply Time'} chartType={'column'} id={"avg_reply_time"}
+                                   api={'/api/v1/wechatwork/analytics/getStatisticsData'}/>
                     </Col>
                 </Row>
                 <Row>
                     <Col>
+                        <GraphCard title={'Daily Negative Feedback Count'} chartType={'column'} id={"negative_feedback_cnt"}
+                                   api={'/api/v1/wechatwork/analytics/getStatisticsData'}/>
+                    </Col>
+                    <Col>
+                        <GraphCard title={'Daily New Apply Count'} chartType={'splineArea'} id={"new_apply_cnt"}
+                                   api={'/api/v1/wechatwork/analytics/getStatisticsData'}/>
+                    </Col>
+
+                    <Col>
                         <GraphCard title={'Daily New Contact Count'} chartType={'splineArea'} id={"new_contact_cnt"}
-                                   xValueFormatString={"yyyy-MM-dd"}
-                                   api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
+                                   api={'/api/v1/wechatwork/analytics/getStatisticsData'}/>
                     </Col>
                     <Col>
                         <h5>Customers per Employee</h5>

@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +36,7 @@ public class WechatWorkGateway {
                 .block();
     }
 
-    public GetUsersWithCustomerContactPermResponse getUsersWithCustomerContactPerm() {
+    public GetUsersWithCustomerContactPermResponse getMembersList() {
         return getWebClient().get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/cgi-bin/externalcontact/get_follow_user_list")
@@ -49,7 +47,7 @@ public class WechatWorkGateway {
                 .block();
     }
 
-    public GetUserBehaviourResponse getBehaviourDataForAllUser(final List<String> userid) {
+    public GetUserBehaviourResponse getStatisticsData(final List<String> userid) {
     /*    val body = new HashMap<String, Object>();
         body.put("userid", "PatrickSiu");
         //body.put("partyid", 1);
@@ -88,14 +86,14 @@ public class WechatWorkGateway {
     }
 
 
-    public GetUnassignedUserResponse getUnassignedUsers() {
+    public GetUnassignedCustomerResponse getUnassignedUsers() {
         return getWebClient().get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/cgi-bin/externalcontact/get_unassigned_list")
                         .queryParam("access_token", getAccessToken().getAccess_token())
                         .build())
                 .retrieve()
-                .bodyToMono(GetUnassignedUserResponse.class)
+                .bodyToMono(GetUnassignedCustomerResponse.class)
                 .block();
     }
 
