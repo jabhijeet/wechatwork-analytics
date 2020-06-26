@@ -53,7 +53,7 @@ class GraphCard extends Component {
     render() {
 
         const options = {
-            theme: "light1", // "light1", "dark1", "dark2"
+            theme: "light2", // "light1", "dark1", "dark2"
             animationEnabled: true,
             zoomEnabled: true,
             title: {
