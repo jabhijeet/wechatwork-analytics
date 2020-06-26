@@ -48,13 +48,13 @@ class App extends Component {
                         <GraphCard title={'Daily Reply Percentage'} chartType={'column'} id={"reply_percentage"}
                                    api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
                     </Col>
-
+                </Row>
+                <Row>
                     <Col>
                         <GraphCard title={'Avg Reply Time'} chartType={'column'} id={"avg_reply_time"}
                                    api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
                     </Col>
-                </Row>
-                <Row>
+
                     <Col>
                         <GraphCard title={'Daily Negative Feedback Count'} chartType={'column'} id={"negative_feedback_cnt"}
                                    api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
@@ -63,7 +63,8 @@ class App extends Component {
                         <GraphCard title={'Daily New Apply Count'} chartType={'splineArea'} id={"new_apply_cnt"}
                                    api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
                     </Col>
-
+                </Row>
+                <Row>
                     <Col>
                         <GraphCard title={'Daily New Contact Count'} chartType={'splineArea'} id={"new_contact_cnt"}
                                    api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
