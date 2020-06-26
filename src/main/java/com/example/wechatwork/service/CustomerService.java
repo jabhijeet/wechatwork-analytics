@@ -7,8 +7,8 @@ import java.util.Map;
  */
 public interface CustomerService {
 
-    public Integer getTotalCustomerCount();
+    public Integer getActiveCustomerCount();
 
-    public Map getTotalCustomerByUser();
+    public Map getCustomerUserMapping();
 
 }
