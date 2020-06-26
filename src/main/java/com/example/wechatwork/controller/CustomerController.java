@@ -25,15 +25,17 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping("getTotalCustomerCount")
+    /**Total active customer */
+    @GetMapping("getActiveCustomerCount")
     public ResponseEntity<Integer> getTotalCustomerCount() {
-        final Integer custCount = customerService.getTotalCustomerCount();
+        final Integer custCount = customerService.getActiveCustomerCount();
         return new ResponseEntity<Integer>(custCount, HttpStatus.OK);
     }
 
-    @GetMapping("getTotalCustomerByUser")
-    public ResponseEntity<Map<String, Integer>> getTotalCustomerByUser() {
-        final Map<String, Integer> map = customerService.getTotalCustomerByUser();
+    /**Count of customer per member **/
+    @GetMapping("getCustomerUserMapping")
+    public ResponseEntity<Map<String, Integer>> getCustomerUserMapping() {
+        final Map<String, Integer> map = customerService.getCustomerUserMapping();
         return new ResponseEntity<Map<String, Integer>>(map, HttpStatus.OK);
     }
 
