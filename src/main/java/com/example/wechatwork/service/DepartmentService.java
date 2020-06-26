@@ -2,7 +2,6 @@ package com.example.wechatwork.service;
 
 import com.example.wechatwork.model.BehaviourData;
 import com.example.wechatwork.model.GetDepartmentResponse;
-import com.example.wechatwork.model.GetUserBehaviourResponse;
 import com.example.wechatwork.model.GetUsersWithCustomerContactPermResponse;
 
 import java.time.LocalDate;
@@ -15,7 +14,7 @@ public interface DepartmentService {
 
     public GetDepartmentResponse getDepartments();
 
-    public GetUsersWithCustomerContactPermResponse getUsersWithCustomerContactPerm();
+    public GetUsersWithCustomerContactPermResponse getMembersList();
 
-    public Map<LocalDate, BehaviourData> getBehaviourDataForAllUser();
+    public Map<LocalDate, BehaviourData> getStatisticsData();
 }

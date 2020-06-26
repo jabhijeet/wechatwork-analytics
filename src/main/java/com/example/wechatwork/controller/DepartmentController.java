@@ -43,18 +43,18 @@ public class DepartmentController {
     /**
      * List of employee with Customer contact permission
      **/
-    @GetMapping("getUsersWithCustomerContactPerm")
-    public ResponseEntity<GetUsersWithCustomerContactPermResponse> getUsersWithCustomerContactPerm() {
-        final GetUsersWithCustomerContactPermResponse response = departmentService.getUsersWithCustomerContactPerm();
+    @GetMapping("getMembersList")
+    public ResponseEntity<GetUsersWithCustomerContactPermResponse> getMembersList() {
+        final GetUsersWithCustomerContactPermResponse response = departmentService.getMembersList();
         return new ResponseEntity<GetUsersWithCustomerContactPermResponse>(response, HttpStatus.OK);
     }
 
     /**
-     * Total Number of Departments
+     * Get statistics data for all users and departments
      **/
-    @GetMapping("getBehaviourDataForAllUser")
-    public ResponseEntity<Map<LocalDate, BehaviourData>> getBehaviourDataForAllUser() {
-        final Map<LocalDate, BehaviourData> behaviourDataMap = departmentService.getBehaviourDataForAllUser();
+    @GetMapping("getStatisticsData")
+    public ResponseEntity<Map<LocalDate, BehaviourData>> getStatisticsData() {
+        final Map<LocalDate, BehaviourData> behaviourDataMap = departmentService.getStatisticsData();
         return new ResponseEntity<Map<LocalDate, BehaviourData>>(behaviourDataMap, HttpStatus.OK);
     }
 
