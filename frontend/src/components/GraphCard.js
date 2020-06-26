@@ -10,22 +10,41 @@ class GraphCard extends Component {
         super(props);
 
         this.state = {
+            id: props.id,
             title: props.title,
             api: props.api,
             chartType: props.chartType,
+            dataPoints: props.dataPoints,
             loading: true
         };
-        this.generateDataPoints = this.generateDataPoints.bind(this);
 
+        this.getApiData = this.getApiData.bind(this);
     }
 
-    generateDataPoints(noOfDps) {
-        var xVal = 1, yVal = 100;
+
+    async componentDidMount() {
+        if (this.state.api) {
+            let response = await fetch(this.state.api);
+            let body = await response.json();
+            console.log(body);
+            var state = {response: body, loading: false};
+            this.setState(state);
+        }
+    }
+
+    getApiData() {
+        let id = this.state.id;
         var dps = [];
-        for (var i = 0; i < noOfDps; i++) {
-            yVal = yVal + Math.round(5 + Math.random() * (-5 - 5));
-            dps.push({x: xVal, y: yVal});
-            xVal++;
+        if (this.state.response) {
+            for (const [key, value] of Object.entries(this.state.response)) {
+                var yVal;
+                if (id === "EmployeeCustomers")
+                    yVal = value;
+                else {
+                    yVal = this.state.response[key][id];
+                }
+                dps.push({label: key, y: yVal});
+            }
         }
         console.log(dps);
         return dps;
@@ -34,7 +53,7 @@ class GraphCard extends Component {
     render() {
 
         const options = {
-            theme: "light1", // "light1", "dark1", "dark2"
+            theme: "light2", // "light1", "dark1", "dark2"
             animationEnabled: true,
             zoomEnabled: true,
             title: {
@@ -47,7 +66,7 @@ class GraphCard extends Component {
             },
             data: [{
                 type: this.state.chartType,
-                dataPoints: this.generateDataPoints(500)
+                dataPoints: this.state.dataPoints ? this.state.dataPoints : this.state.api ? this.getApiData() : this.generateDataPoints(30)
             }]
         }
 

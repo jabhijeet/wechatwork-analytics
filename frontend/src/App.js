@@ -16,19 +16,63 @@ class App extends Component {
         if (isLoading) {
             return "Loading...";
         }
+
         return (
             <div className="App">
                 <header className="App-header">WeChatWork-Analytics</header>
 
                 <CardDeck>
-                    <AnalyticsCard header={'Total Departments'} api={'/greeting?name=Departments'}/>
+                    <AnalyticsCard header={'Total Departments'} api={'/api/v1/wechatwork/analytics/getDepartments'}
+                                   id={"TotalDepartments"}/>
                     <AnalyticsCard header={'Total Company Employees'}
-                                   api={'/greeting?name=Employees'}/>
-                    <AnalyticsCard header={'Total Company Clients'} api={'/greeting?name=Clients'}/>
-                    <AnalyticsCard header={'Active Clients'} api={'/greeting?name=ActiveClients'}/>
-                    <AnalyticsCard header={'TypesOfMessages'} api={'/greeting?name=TypesOfMessages'}/>
+                                   api={'/api/v1/wechatwork/analytics/getUsersWithCustomerContactPerm'}
+                                   id={"TotalCompanyEmployees"}/>
+                    <AnalyticsCard header={'Total Company Clients'}
+                                   api={'/api/v1/wechatwork/analytics/getCustomerUserMapping'}
+                                   id={"TotalCompanyClients"}/>
+                    <AnalyticsCard header={'Unassigned Customers'}
+                                   api={'/api/v1/wechatwork/analytics/getUnassignedUserCount'}
+                                   id={"UnassignedCustomers"}/>
                 </CardDeck>
-                <Row><Col><GraphCard title={'Hourly Usage'} chartType={'area'}/></Col><Col><GraphCard  title={'Response Times'} chartType={'column'}/></Col></Row>
+                <Row>
+                    <Col>
+                        <GraphCard title={'Daily Message Count'} chartType={'splineArea'} id={"message_cnt"}
+                                   api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
+                    </Col>
+                    <Col>
+                        <GraphCard title={'Daily Chat Count'} chartType={'splineArea'} id={"chat_cnt"}
+                                   api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
+                    </Col>
+
+                    <Col>
+                        <GraphCard title={'Daily Reply Percentage'} chartType={'column'} id={"reply_percentage"}
+                                   api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
+                    </Col>
+
+                    <Col>
+                        <GraphCard title={'Avg Reply Time'} chartType={'column'} id={"avg_reply_time"}
+                                   api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <GraphCard title={'Daily Negative Feedback Count'} chartType={'column'} id={"negative_feedback_cnt"}
+                                   api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
+                    </Col>
+                    <Col>
+                        <GraphCard title={'Daily New Apply Count'} chartType={'splineArea'} id={"new_apply_cnt"}
+                                   api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
+                    </Col>
+
+                    <Col>
+                        <GraphCard title={'Daily New Contact Count'} chartType={'splineArea'} id={"new_contact_cnt"}
+                                   api={'/api/v1/wechatwork/analytics/getBehaviourDataForAllUser'}/>
+                    </Col>
+                    <Col>
+                        <GraphCard title={'Customers per Employee'} chartType={'column'} id={"EmployeeCustomers"}
+                                   api={'/api/v1/wechatwork/analytics/getCustomerUserMapping'}/>
+                    </Col>
+                </Row>
             </div>
         );
     }
