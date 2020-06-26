@@ -2,4 +2,5 @@
 /target/
 ./src/main/resources/application-local.yml
 ./wechatwork-analytics.iml
+/frontend/node_modules/
 *.iml
