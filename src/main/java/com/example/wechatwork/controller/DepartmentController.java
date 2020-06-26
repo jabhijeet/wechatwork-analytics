@@ -1,5 +1,6 @@
 package com.example.wechatwork.controller;
 
+import com.example.wechatwork.model.BehaviourData;
 import com.example.wechatwork.model.GetDepartmentResponse;
 import com.example.wechatwork.model.GetUserBehaviourResponse;
 import com.example.wechatwork.model.GetUsersWithCustomerContactPermResponse;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 /**
@@ -51,9 +53,9 @@ public class DepartmentController {
      * Total Number of Departments
      **/
     @GetMapping("getBehaviourDataForAllUser")
-    public ResponseEntity<GetUserBehaviourResponse> getBehaviourDataForAllUser() {
-        final GetUserBehaviourResponse behaviourDataForAllUser  = departmentService.getBehaviourDataForAllUser();
-        return new ResponseEntity<GetUserBehaviourResponse>(behaviourDataForAllUser, HttpStatus.OK);
+    public ResponseEntity<Map<LocalDate, BehaviourData>> getBehaviourDataForAllUser() {
+        final Map<LocalDate, BehaviourData> behaviourDataMap = departmentService.getBehaviourDataForAllUser();
+        return new ResponseEntity<Map<LocalDate, BehaviourData>>(behaviourDataMap, HttpStatus.OK);
     }
 
 }
