@@ -1,5 +1,6 @@
 package com.example.wechatwork.controller;
 
+import com.example.wechatwork.model.GetUnassignedUserResponse;
 import com.example.wechatwork.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,12 @@ public class CustomerController {
     public ResponseEntity<Integer> getTotalCustomerCount() {
         final Integer custCount = customerService.getActiveCustomerCount();
         return new ResponseEntity<Integer>(custCount, HttpStatus.OK);
+    }
+
+    @GetMapping("getUnassignedUserCount")
+    public ResponseEntity<Integer> getUnassignedUsers() {
+        GetUnassignedUserResponse getUnassignedUserResponse = customerService.getUnassignedUsers();
+        return new ResponseEntity<Integer>(getUnassignedUserResponse.getErrcode().equalsIgnoreCase("0") ? getUnassignedUserResponse.getInfo().size() : 0, HttpStatus.OK);
     }
 
     /**Count of customer per member **/
