@@ -26,7 +26,7 @@ import static java.util.Objects.nonNull;
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WechatWorkGateway.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DepartmentServiceImpl.class);
 
     private WechatWorkGateway wechatWorkGateway;
 
@@ -41,16 +41,16 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public GetUsersWithCustomerContactPermResponse getUsersWithCustomerContactPerm() {
-        return wechatWorkGateway.getUsersWithCustomerContactPerm();
+    public GetUsersWithCustomerContactPermResponse getMembersList() {
+        return wechatWorkGateway.getMembersList();
     }
 
     @Override
-    public Map<LocalDate, BehaviourData> getBehaviourDataForAllUser() {
+    public Map<LocalDate, BehaviourData> getStatisticsData() {
         Map<LocalDate, BehaviourData> behaviourDataMap = new TreeMap<>();
-        GetUsersWithCustomerContactPermResponse response = wechatWorkGateway.getUsersWithCustomerContactPerm();
+        GetUsersWithCustomerContactPermResponse response = wechatWorkGateway.getMembersList();
         if (response.getErrcode().equalsIgnoreCase("0") && nonNull(response.getFollow_user()) && response.getFollow_user().size() > 0) {
-            GetUserBehaviourResponse getUserBehaviourResponse = wechatWorkGateway.getBehaviourDataForAllUser(response.getFollow_user());
+            GetUserBehaviourResponse getUserBehaviourResponse = wechatWorkGateway.getStatisticsData(response.getFollow_user());
             LOGGER.info("getUserBehaviourResponse: {}", getUserBehaviourResponse);
             if (nonNull(getUserBehaviourResponse) && getUserBehaviourResponse.getErrcode().equalsIgnoreCase("0") && nonNull(getUserBehaviourResponse.getBehavior_data()) && getUserBehaviourResponse.getBehavior_data().size() > 0) {
                 for (BehaviourData behaviourData : getUserBehaviourResponse.getBehavior_data()) {
